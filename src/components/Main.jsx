@@ -1,8 +1,11 @@
 import { useState } from "react"
+import axios from "axios"
 
 
 
 export default function Main() {
+
+    const endpoint = 'https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts'
 
     const [formData, setFormData] = useState({
         "title": '',
@@ -12,6 +15,12 @@ export default function Main() {
     })
 
     function handleSubmit(e) {
+        e.preventDefault()
+
+        axios.post(endpoint, formData, {
+            headers: { 'Content-Type': 'application/json' }
+        })
+
 
     }
 
@@ -22,45 +31,46 @@ export default function Main() {
 
         <main>
             <div className="container">
-                <form >
-                    <div class="mb-3">
-                        <label for="author" class="form-label">Author</label>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="author" className="form-label">Author</label>
                         <input
                             name="author"
                             value={formData.author}
                             onChange={e => setFormData({ ...formData, author: e.target.value })}
-                            type="text" class="form-control"
+                            type="text" className="form-control"
                             id="author" placeholder="Author name" />
                     </div>
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Author</label>
+                    <div className="mb-3">
+                        <label htmlFor="title" className="form-label">Author</label>
                         <input
                             name="title"
                             value={formData.title}
                             onChange={e => setFormData({ ...formData, title: e.target.value })}
-                            type="text" class="form-control"
+                            type="text" className="form-control"
                             id="title" placeholder="Title" />
                     </div>
-                    <div class="mb-3">
-                        <label for="body" class="form-label">Article text</label>
+                    <div className="mb-3">
+                        <label htmlFor="body" className="form-label">Article text</label>
                         <textarea
                             name="body"
                             value={formData.body}
                             onChange={e => setFormData({ ...formData, body: e.target.value })}
-                            class="form-control" id="body"
+                            className="form-control" id="body"
                             rows="3"></textarea>
                     </div>
-                    <div class="form-check">
+                    <div className="form-check mb-4">
                         <input
                             name="public"
                             checked={formData.public}
                             onChange={e => setFormData({ ...formData, public: e.target.checked })}
-                            class="form-check-input" type="checkbox"
+                            className="form-check-input" type="checkbox"
                             id="public" />
-                        <label class="form-check-label" htmlFor="public">
+                        <label className="form-check-label" htmlFor="public">
                             Public
                         </label>
                     </div>
+                    <button type="submit" className="btn btn-primary">Send ticket</button>
                 </form>
             </div>
 
