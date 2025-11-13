@@ -14,12 +14,28 @@ export default function Main() {
         "public": false
     })
 
+    const [result, setResult] = useState('')
+
     function handleSubmit(e) {
         e.preventDefault()
 
         axios.post(endpoint, formData, {
             headers: { 'Content-Type': 'application/json' }
         })
+            .then(res => {
+                console.log(res);
+                if (res.status === 201) {
+                    setResult('Ticket sended succesfully')
+                }
+
+            })
+            .catch(err => {
+                console.log(err.message);
+
+                setResult('Ticket send failed')
+                console.log(result);
+
+            })
 
 
     }
@@ -31,6 +47,7 @@ export default function Main() {
 
         <main>
             <div className="container">
+                {result === 'Ticket sended succesfully' ? <p className="text-success">{result}</p> : <p className="text-danger">{result}</p>}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="author" className="form-label">Author</label>
@@ -42,7 +59,7 @@ export default function Main() {
                             id="author" placeholder="Author name" />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="title" className="form-label">Author</label>
+                        <label htmlFor="title" className="form-label">Title</label>
                         <input
                             name="title"
                             value={formData.title}
