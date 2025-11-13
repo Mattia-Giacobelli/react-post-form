@@ -27,7 +27,7 @@ export default function Main() {
                 if (res.status === 201) {
                     console.log(res);
 
-                    setResult('Ticket sended succesfully')
+                    setResult('Ticket sent succesfully')
                 }
 
             })
